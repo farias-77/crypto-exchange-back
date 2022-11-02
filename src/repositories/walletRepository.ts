@@ -22,3 +22,7 @@ export async function updateUserWallet(
         data: { realAmount, linkCoinAmount },
     });
 }
+
+export async function getAllWallets() {
+    return await prisma.wallets.findMany();
+}

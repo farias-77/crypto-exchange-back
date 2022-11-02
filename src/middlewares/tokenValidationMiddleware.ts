@@ -16,7 +16,6 @@ export default function tokenMiddleware(
         }
 
         const retornoJWT = jwt.verify(token, secretKey);
-
         res.locals.retornoJwtVerify = retornoJWT;
         next();
     } catch (error) {

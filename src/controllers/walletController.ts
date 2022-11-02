@@ -34,3 +34,11 @@ export async function updateUserWallet(req: Request, res: Response) {
 
     res.status(200).send(updatedWallet);
 }
+
+export async function getAllWallets(req: Request, res: Response) {
+    const { id: userId } = res.locals.retornoJwtVerify;
+    await authServices.validateUserPrivilege(userId);
+    const wallets = await walletServices.getAllWallets();
+
+    res.status(200).send(wallets);
+}

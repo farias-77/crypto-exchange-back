@@ -5,6 +5,7 @@ import { walletSchema } from "../schemas/walletSchemas";
 import {
     getUserWallet,
     updateUserWallet,
+    getAllWallets,
 } from "../controllers/walletController";
 
 import { Router } from "express";
@@ -17,5 +18,6 @@ router.put(
     schemaValidation(walletSchema),
     updateUserWallet
 );
+router.get("/allwallets", getAllWallets);
 
 export default router;

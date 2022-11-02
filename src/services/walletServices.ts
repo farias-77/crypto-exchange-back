@@ -49,6 +49,10 @@ export async function updateUserWallet(
     );
 }
 
+export async function getAllWallets() {
+    return await walletRepositories.getAllWallets();
+}
+
 function sanitizeWalletValues(wallet: Wallets): Wallets {
     return {
         ...wallet,
