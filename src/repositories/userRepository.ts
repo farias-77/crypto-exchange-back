@@ -19,6 +19,14 @@ export async function findByName(fullName: string): Promise<Users | null> {
     });
 }
 
+export async function findById(id: number): Promise<Users | null> {
+    return await prisma.users.findFirst({
+        where: {
+            id,
+        },
+    });
+}
+
 export async function insertUser(user: TUser) {
     return await prisma.users.create({
         data: user,

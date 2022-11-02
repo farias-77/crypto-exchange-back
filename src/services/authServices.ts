@@ -77,6 +77,19 @@ export async function generateToken(email: string) {
     return token;
 }
 
+export async function validateUserPrivilege(userId: number) {
+    const user: Users | null = await findById(userId);
+
+    if (!user || user.userPrivilege !== "ADMIN") {
+        throw {
+            type: "unauthorized",
+            message: "You do not have access to wallets updates!",
+        };
+    }
+
+    return;
+}
+
 async function encryptsPassword(password: string): Promise<string> {
     const SALT: number = 10;
     const encryptedPassword: string = await bcrypt.hash(password, SALT);
@@ -90,4 +103,8 @@ async function findByEmail(email: string): Promise<Users | null> {
 
 async function findByName(name: string): Promise<Users | null> {
     return await userRepositories.findByName(name);
+}
+
+async function findById(userId: number): Promise<Users | null> {
+    return await userRepositories.findById(userId);
 }
