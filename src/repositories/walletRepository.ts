@@ -7,3 +7,8 @@ export async function initializeEmptyWallet(userId: number) {
 export async function getUserWallet(userId: number) {
     return await prisma.wallets.findFirst({ where: { userId } });
 }
+
+export async function updateUserWallet(
+    realAmount: number,
+    linkCoinAmount: number
+) {}

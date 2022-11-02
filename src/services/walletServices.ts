@@ -5,7 +5,7 @@ export async function createEmptyWallet(userId: number) {
     return await walletRepositories.initializeEmptyWallet(userId);
 }
 
-export async function getUserWallet(userId: number): Promise<Wallets | null> {
+export async function getUserWallet(userId: number): Promise<Wallets> {
     const wallet: Wallets | null = await walletRepositories.getUserWallet(
         userId
     );
@@ -17,5 +17,15 @@ export async function getUserWallet(userId: number): Promise<Wallets | null> {
         };
     }
 
-    return wallet;
+    const intValueWallet: Wallets = sanitizeWalletValues(wallet);
+
+    return intValueWallet;
+}
+
+function sanitizeWalletValues(wallet: Wallets): Wallets {
+    return {
+        ...wallet,
+        linkCoinAmount: wallet.linkCoinAmount / 100,
+        realAmount: wallet.realAmount / 100,
+    };
 }
