@@ -70,7 +70,9 @@ export async function generateToken(email: string) {
     const user: Users | null = await findByEmail(email);
 
     const secretKey: string = process.env.JWT_SECRET || "";
-    const token: string = user ? jwt.sign({ id: user.id }, secretKey) : "";
+    const token: string = user
+        ? jwt.sign({ id: user.id, privilege: user.userPrivilege }, secretKey)
+        : "";
 
     return token;
 }
