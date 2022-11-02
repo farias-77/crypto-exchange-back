@@ -49,7 +49,7 @@ export async function insertUser(user: TUser) {
     return await userRepositories.insertUser(encryptedUser);
 }
 
-export async function sanitizeUser(user: Users) {
+export function sanitizeUser(user: Users) {
     return { id: user.id, email: user.email, fullName: user.fullName };
 }
 
