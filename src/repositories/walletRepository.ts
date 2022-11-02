@@ -24,5 +24,7 @@ export async function updateUserWallet(
 }
 
 export async function getAllWallets() {
-    return await prisma.wallets.findMany();
+    return await prisma.wallets.findMany({
+        include: { users: { select: { fullName: true } } },
+    });
 }
