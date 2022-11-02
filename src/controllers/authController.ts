@@ -13,9 +13,11 @@ export async function signUp(req: Request, res: Response) {
 
     authServices.validateConfirmPassword(user.password, confirmPassword);
     await authServices.validateNewEmail(user.email);
+    await authServices.validateNewUserName(user.fullName);
     const createdUser = await authServices.insertUser(user);
+    const returnUser = authServices.sanitizeUser(createdUser);
 
-    res.status(201).send(createdUser);
+    res.status(201).send(returnUser);
 }
 
 // export async function signIn(req: Request, res: Response) {

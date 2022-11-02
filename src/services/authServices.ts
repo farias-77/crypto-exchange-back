@@ -30,6 +30,16 @@ export async function validateNewEmail(email: string) {
     return;
 }
 
+export async function validateNewUserName(fullName: string) {
+    const user: Users | null = await findByName(fullName);
+
+    if (user) {
+        throw { type: "conflict", message: "You already have an account!" };
+    }
+
+    return;
+}
+
 export async function insertUser(user: TUser) {
     const encryptedUser: TUser = {
         ...user,
@@ -37,6 +47,10 @@ export async function insertUser(user: TUser) {
     };
 
     return await userRepositories.insertUser(encryptedUser);
+}
+
+export async function sanitizeUser(user: Users) {
+    return { id: user.id, email: user.email, fullName: user.fullName };
 }
 
 export async function validatePassword(userBody: TUser) {
@@ -70,4 +84,8 @@ async function encryptsPassword(password: string): Promise<string> {
 
 async function findByEmail(email: string): Promise<Users | null> {
     return await userRepositories.findByEmail(email);
+}
+
+async function findByName(name: string): Promise<Users | null> {
+    return await userRepositories.findByName(name);
 }
