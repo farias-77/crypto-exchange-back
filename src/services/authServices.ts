@@ -66,13 +66,17 @@ export async function validatePassword(userBody: TUser) {
     return;
 }
 
+export async function getUserRole(email: string) {
+    const user: Users | null = await findByEmail(email);
+
+    return user?.userPrivilege;
+}
+
 export async function generateToken(email: string) {
     const user: Users | null = await findByEmail(email);
 
     const secretKey: string = process.env.JWT_SECRET || "";
-    const token: string = user
-        ? jwt.sign({ id: user.id, privilege: user.userPrivilege }, secretKey)
-        : "";
+    const token: string = user ? jwt.sign({ id: user.id }, secretKey) : "";
 
     return token;
 }
