@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { TUser } from "../types/userTypes";
 
+import * as walletServices from "../services/walletServices";
 import * as authServices from "../services/authServices";
 
 export async function signUp(req: Request, res: Response) {
@@ -16,6 +17,8 @@ export async function signUp(req: Request, res: Response) {
     await authServices.validateNewUserName(user.fullName);
     const createdUser = await authServices.insertUser(user);
     const returnUser = authServices.sanitizeUser(createdUser);
+
+    await walletServices.createEmptyWallet(returnUser.id);
 
     res.status(201).send(returnUser);
 }
