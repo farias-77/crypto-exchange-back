@@ -1,15 +1,22 @@
 import { Request, Response } from "express";
+import { TUser } from "../types/userTypes";
 
-// export async function signUp(req: Request, res: Response) {
-//     const user: TUser = { email: req.body.email, password: req.body.password };
-//     const confirmPassword: string = req.body.confirmPassword;
+import * as authServices from "../services/authServices";
 
-//     authServices.validateConfirmPassword(user.password, confirmPassword);
-//     await authServices.validateNewEmail(user.email);
-//     const createdUser = await authServices.insertUser(user);
+export async function signUp(req: Request, res: Response) {
+    const user: TUser = {
+        email: req.body.email,
+        password: req.body.password,
+        fullName: req.body.fullName,
+    };
+    const confirmPassword: string = req.body.confirmPassword;
 
-//     res.status(201).send(createdUser);
-// }
+    authServices.validateConfirmPassword(user.password, confirmPassword);
+    await authServices.validateNewEmail(user.email);
+    const createdUser = await authServices.insertUser(user);
+
+    res.status(201).send(createdUser);
+}
 
 // export async function signIn(req: Request, res: Response) {
 //     const user: TUser = req.body;
