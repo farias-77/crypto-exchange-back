@@ -8,6 +8,9 @@ import * as authServices from "../services/authServices";
 
 export async function getUserWallet(req: Request, res: Response) {
     const userId: number = Number(req.params.userId);
+    const { id: requesterId } = res.locals.retornoJwtVerify;
+
+    await authServices.validateIdentity(userId, requesterId);
     const wallet: Wallets | null = await walletServices.getUserWallet(userId);
 
     res.status(200).send(wallet);

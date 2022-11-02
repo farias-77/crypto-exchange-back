@@ -78,6 +78,23 @@ export async function getUserId(email: string) {
     return user?.id;
 }
 
+export async function validateIdentity(userId: number, requesterId: number) {
+    const requester = await userRepositories.findById(requesterId);
+
+    if (requester?.userPrivilege === "ADMIN") {
+        return;
+    }
+
+    if (userId !== requester?.id) {
+        throw {
+            type: "unauthorized",
+            message: "You do not have access to this information.",
+        };
+    }
+
+    return;
+}
+
 export async function generateToken(email: string) {
     const user: Users | null = await findByEmail(email);
 
