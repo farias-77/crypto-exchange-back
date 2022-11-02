@@ -29,6 +29,7 @@ export async function signIn(req: Request, res: Response) {
     await authServices.validatePassword(user);
     const token = await authServices.generateToken(user.email);
     const role = await authServices.getUserRole(user.email);
+    const id = await authServices.getUserId(user.email);
 
-    res.status(200).send({ token, role });
+    res.status(200).send({ token, role, userId: id });
 }

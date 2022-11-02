@@ -72,6 +72,12 @@ export async function getUserRole(email: string) {
     return user?.userPrivilege;
 }
 
+export async function getUserId(email: string) {
+    const user: Users | null = await findByEmail(email);
+
+    return user?.id;
+}
+
 export async function generateToken(email: string) {
     const user: Users | null = await findByEmail(email);
 
